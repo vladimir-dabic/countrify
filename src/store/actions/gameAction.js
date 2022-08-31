@@ -22,17 +22,15 @@ export const getCountries = (region, numberOfCountries, numberOfRounds) => {
 
       let result = await api.get(`region/${region}`);
       let response = result.data.filter((c) => c.name !== "Republic of Kosovo");
-      console.log({ response });
 
       dispatch({
         type: "GET_COUNTRIES",
-        payload: { data: response.data, loading: true },
+        payload: { data: response, loading: true },
       });
 
-      dispatch(
-        newQuestions(null, response.data, numberOfCountries, numberOfRounds)
-      );
+      dispatch(newQuestions(null, response, numberOfCountries, numberOfRounds));
     } catch (error) {
+      console.error(error);
       dispatch({
         type: "ERR_GET_COUNTRIES",
         payload: { loading: false, error },
